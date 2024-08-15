@@ -1,0 +1,96 @@
+(function() {
+    class PressurePath2D {
+        constructor() {
+            this.segments = [];
+        }
+        moveTo(x, y) {
+            this.segments.push({ func: 'moveTo', x, y });
+        }
+        lineTo(x, y, pressure) {
+            this.segments.push({ func: 'lineTo', x, y, pressure });
+        }
+    }
+
+    const ppaths = [];
+
+    /** @type {HTMLCanvasElement} */
+    const canvas = document.querySelector('#pen-squared-root canvas');
+
+    const ctx = canvas.getContext('2d');
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    const img = new Image();
+
+    const drawImage = () => {
+        const canvasAR = canvas.width / canvas.height;
+        const imageAR = img.width / img.height;
+
+        let drawWidth, drawHeight, offsetX, offsetY;
+
+        if (canvasAR > imageAR) {
+            drawHeight = canvas.height;
+            drawWidth = img.width * (drawHeight / img.height);
+            offsetY = 0;
+            offsetX = (canvas.width - drawWidth) / 2;
+        } else {
+            drawWidth = canvas.width;
+            drawHeight = img.height * (drawWidth / img.width);
+            offsetX = 0;
+            offsetY = (canvas.height - drawHeight) / 2;
+        }
+
+        ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+    };
+
+    let needsRedraw = true;
+
+    const redraw = () => {
+        if (!needsRedraw) return;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (!img.complete) {
+            return;
+        }
+
+        drawImage();
+
+        let strokeColor;
+
+        if ('penSquaredColor' in window) {
+            strokeColor = window.penSquaredColor;
+        } else {
+            strokeColor = 'rgb(0 0 0)';
+        }
+
+        ctx.strokeStyle = strokeColor;
+
+        for (const ppath of ppaths) {
+            ctx.beginPath();
+            for (const seg of ppath.segments) {
+                if (seg.func === 'moveTo') {
+                    ctx.moveTo(seg.x, seg.y);
+                }
+                if (seg.func === 'lineTo') {
+                    ctx.lineWidth = 6 * seg.pressure;
+                    ctx.lineTo(seg.x, seg.y);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(seg.x, seg.y);
+                }
+            }
+        }
+
+        needsRedraw = false;
+    };
+
+    const requestRedraw = () => {
+        if (needsRedraw) return;
+        needsRedraw = true;
+        requestAnimationFrame(redraw);
+    };
+
+    img.onload = requestRedraw;
+    img.src = window.penSquaredImageUrl;
+})();

@@ -20,4 +20,3 @@
 
     document.body.appendChild(rootEl);
 })();
-
