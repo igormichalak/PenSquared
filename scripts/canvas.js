@@ -43,7 +43,7 @@
         ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
     };
 
-    let needsRedraw = true;
+    let needsRedraw = false;
 
     const redraw = () => {
         if (!needsRedraw) return;
@@ -93,4 +93,27 @@
 
     img.onload = requestRedraw;
     img.src = window.penSquaredImageUrl;
+
+    document.addEventListener('focus', requestRedraw);
+    document.addEventListener('blur', requestRedraw);
+    document.addEventListener('visibilitychange', requestRedraw);
+
+    const onresize = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        requestRedraw();
+    };
+    onresize();
+
+    window.addEventListener('resize', onresize);
+
+    window.cleanupPenSquared = () => {
+        document.removeEventListener('focus', requestRedraw);
+        document.removeEventListener('blur', requestRedraw);
+        document.removeEventListener('visibilitychange', requestRedraw);
+
+        window.removeEventListener('resize', onresize);
+
+        delete window.cleanupPenSquared;
+    };
 })();
