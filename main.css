@@ -1,10 +1,6 @@
-#pen-squared-root,
-#pen-squared-root * {
-    all: initial;
-    touch-action: manipulation;
-}
-
 #pen-squared-root {
+    all: initial;
+
     position: fixed;
     inset: 0;
     z-index: 2147483646;
@@ -12,26 +8,55 @@
 }
 
 #pen-squared-root canvas {
+    all: initial;
     outline: none;
 }
 
-#pen-squared-root button {
+#p2-panel {
+    all: initial;
+
     position: fixed;
-    inset: 2vw auto auto 2vw;
+    inset: 50% 2vw auto auto;
+    transform: translateY(-50%);
     z-index: 2147483647;
 
-    width: 64px;
-    height: 64px;
+    width: 56px;
+    padding: 16px 0;
 
-    background-color: rgb(0 0 0 / 80%);
-    backdrop-filter: blur(4px);
+    background-color: white;
+    border-radius: 28px;
+
+    box-shadow: 0 10px 20px hsl(0deg 0% 0% / .15),
+                0  3px  6px hsl(0deg 0% 0% / .10);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+
+    & > hr {
+        all: initial;
+
+        width: 30px;
+        height: 0;
+        margin: 12px 0 24px 0;
+
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid rgb(140 140 140);
+    }
+}
+
+.p2-panel-btn {
+    all: initial;
+
+    width: 48px;
+    height: 48px;
+    padding: 0;
+
+    background-color: transparent;
     border: none;
-    border-radius: 50%;
-
-    font-family: sans-serif;
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
+    border-radius: 24px;
 
     display: flex;
     justify-content: center;
@@ -39,5 +64,43 @@
 
     &:hover {
         cursor: pointer;
+    }
+
+    & > span {
+        all: initial;
+
+        display: block;
+        width: 24px;
+        height: 24px;
+
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+
+        cursor: inherit;
+    }
+}
+
+#p2-panel-colors {
+    all: initial;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+
+    & > button {
+        all: initial;
+
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        border-radius: 50%;
+
+        transition: transform 50ms ease-in-out;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 }
