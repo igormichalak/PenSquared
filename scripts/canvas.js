@@ -116,4 +116,35 @@
 
         delete window.cleanupPenSquared;
     };
+
+    let isDrawing = false;
+
+    canvas.addEventListener('pointerleave', () => {
+        isDrawing = false;
+    });
+
+    canvas.addEventListener('pointerup', e => {
+        if (!isDrawing) return;
+
+        ppaths.at(-1).lineTo(e.offsetX, e.offsetY, e.pressure);
+
+        isDrawing = false;
+        requestRedraw();
+    });
+
+    canvas.addEventListener('pointerdown', e => {
+        isDrawing = true;
+
+        const path = new PressurePath2D();
+        path.moveTo(e.offsetX, e.offsetY);
+        ppaths.push(path);
+    });
+
+    canvas.addEventListener('pointermove', e => {
+        if (!isDrawing) return;
+
+        ppaths.at(-1).lineTo(e.offsetX, e.offsetY, e.pressure);
+
+        requestRedraw();
+    });
 })();
