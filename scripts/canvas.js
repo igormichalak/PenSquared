@@ -1,7 +1,8 @@
 (function() {
     class PressurePath2D {
-        constructor() {
+        constructor(strokeStyle) {
             this.segments = [];
+            this.strokeStyle = strokeStyle;
         }
         moveTo(x, y) {
             this.segments.push({ func: 'moveTo', x, y });
@@ -72,7 +73,9 @@
         ctx.strokeStyle = strokeColor;
 
         for (const ppath of ppaths) {
+            ctx.strokeStyle = ppath.strokeStyle;
             ctx.beginPath();
+
             for (const seg of ppath.segments) {
                 if (seg.func === 'moveTo') {
                     ctx.moveTo(seg.x, seg.y);
@@ -157,7 +160,7 @@
     canvas.addEventListener('pointerdown', e => {
         isDrawing = true;
 
-        const path = new PressurePath2D();
+        const path = new PressurePath2D(window.penSquaredColor);
         path.moveTo(e.offsetX, e.offsetY);
         ppaths.push(path);
     });
