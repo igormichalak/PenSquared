@@ -1,9 +1,11 @@
-window.isPenSquaredActive = false;
-window.penSquaredImageUrl = null;
+(function() {
+    window.isPenSquaredActive = false;
+    window.penSquaredImageUrl = null;
 
-if ('cleanupPenSquared' in window) {
-    window.cleanupPenSquared();
-}
+    if ('cleanupPenSquared' in window) {
+        window.cleanupPenSquared();
+    }
 
-document.querySelector('#pen-squared-root')?.remove();
+    document.querySelector('#pen-squared-root')?.remove();
+})();
 
