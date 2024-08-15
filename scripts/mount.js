@@ -19,4 +19,5 @@
     rootEl.appendChild(canvas);
 
     document.body.appendChild(rootEl);
+    document.body.style.overflow = 'hidden';
 })();

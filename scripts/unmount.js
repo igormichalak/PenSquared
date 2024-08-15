@@ -7,5 +7,6 @@
     }
 
     document.querySelector('#pen-squared-root')?.remove();
+    document.body.style.overflow = '';
 })();
 
