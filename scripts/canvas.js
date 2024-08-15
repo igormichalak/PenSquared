@@ -7,6 +7,11 @@
             this.segments.push({ func: 'moveTo', x, y });
         }
         lineTo(x, y, pressure) {
+            if (!pressure) {
+                const lineSegments = this.segments.filter(seg => seg.func === 'lineTo');
+                pressure = lineSegments.length > 0 ? lineSegments.at(-1).pressure : 0;
+            }
+
             this.segments.push({ func: 'lineTo', x, y, pressure });
         }
     }
@@ -126,7 +131,7 @@
     canvas.addEventListener('pointerup', e => {
         if (!isDrawing) return;
 
-        ppaths.at(-1).lineTo(e.offsetX, e.offsetY, e.pressure);
+        ppaths.at(-1).lineTo(e.offsetX, e.offsetY);
 
         isDrawing = false;
         requestRedraw();
