@@ -9,6 +9,8 @@
 
 #pen-squared-root canvas {
     all: initial;
+    touch-action: none;
+
     outline: none;
 }
 
@@ -49,6 +51,7 @@
 
 .p2-panel-btn {
     all: initial;
+    touch-action: none;
 
     width: 48px;
     height: 48px;
@@ -91,6 +94,7 @@
 
     & > button {
         all: initial;
+        touch-action: none;
 
         width: 30px;
         height: 30px;
