@@ -31,6 +31,19 @@ chrome.action.onClicked.addListener(async tab => {
 
     chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        files: ['scripts/mount.js', 'scripts/canvas.js'],
+        files: ['scripts/mount.js', 'scripts/canvas.js', 'scripts/ui.js'],
+    });
+});
+
+chrome.runtime.onMessage.addListener(async (req, sender) => {
+    if (req?.penSquaredAction !== 'unmount' || !sender.tab) return;
+
+    await chrome.scripting.executeScript({
+        target: { tabId: sender.tab.id },
+        files: ['scripts/unmount.js'],
+    });
+    chrome.scripting.removeCSS({
+        target: { tabId: sender.tab.id },
+        files: ['main.css'],
     });
 });
