@@ -96,6 +96,12 @@
         requestAnimationFrame(redraw);
     };
 
+    window.penSquaredUndo = () => {
+        if (ppaths.length === 0) return;
+        ppaths.pop();
+        requestRedraw();
+    };
+
     img.onload = requestRedraw;
     img.src = window.penSquaredImageUrl;
 
@@ -129,6 +135,7 @@
 
         window.removeEventListener('resize', onresize);
 
+        delete window.penSquaredUndo;
         delete window.cleanupPenSquared;
     };
 

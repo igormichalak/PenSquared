@@ -6,7 +6,7 @@
     panel.id = 'p2-panel';
 
     const closeButton = document.createElement('button');
-    closeButton.id = 'p2-close-btn'
+    closeButton.id = 'p2-close-btn';
     closeButton.textContent = '⨯';
 
     closeButton.addEventListener('click', async () => {
@@ -14,6 +14,16 @@
     });
 
     panel.appendChild(closeButton);
+
+    const undoButton = document.createElement('button');
+    undoButton.id = 'p2-undo-btn';
+    undoButton.textContent = '↩';
+
+    undoButton.addEventListener('click', () => {
+        if ('penSquaredUndo' in window) window.penSquaredUndo();
+    });
+
+    panel.appendChild(undoButton);
     panel.appendChild(document.createElement('hr'));
 
     const colors = {
