@@ -104,6 +104,16 @@
     document.addEventListener('visibilitychange', requestRedraw);
 
     const onresize = () => {
+        const xFactor = window.innerWidth / canvas.width;
+        const yFactor = window.innerHeight / canvas.height;
+
+        for (const ppath of ppaths) {
+            for (const seg of ppath.segments) {
+                seg.x *= xFactor;
+                seg.y *= yFactor;
+            }
+        }
+
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         requestRedraw();
